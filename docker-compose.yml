@@ -1,0 +1,41 @@
+services:
+  aitutor-api:
+    build:
+      context: .
+      dockerfile: "AiTutor.API/Dockerfile"
+    ports:
+      - "5000:5000"  # HTTP
+      - "5001:5001"  # HTTPS
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_ENVIRONMENT=Development
+      - REDIS_CONNECTION_STRING=redis:6379
+      - OLLAMA_BASE_URL=http://ollama-ml:11434
+    networks:
+      - aitutor-net
+    depends_on:
+      - redis
+      - ollama-ml
+    command: [ "./wait-for-it.sh", "ollama-ml:5002", "--", "dotnet", "AiTutor.API.dll" ]
+
+  ollama-ml:
+    build:
+      context: AiTutor.Infrastructure
+      dockerfile: "Dockerfile"
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=http://0.0.0.0:11434
+    networks:
+      - aitutor-net
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"  # Expose the Redis port to the container network
+    networks:
+      - aitutor-net
+
+networks:
+  aitutor-net:
+    driver: bridge

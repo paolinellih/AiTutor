@@ -1,0 +1,51 @@
+# Ignore the .git directory and other source control directories
+.git
+.gitignore
+
+# Ignore the IDE config files for Rider and Visual Studio
+.idea
+.vscode
+.vs
+
+# Ignore build output and temporary files
+bin/
+obj/
+out/
+Debug/
+Release/
+*.dll
+*.exe
+*.pdb
+*.config
+
+# Ignore logs and other runtime files
+*.log
+*.bak
+*.swp
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Ignore test results
+TestResults/
+
+# Ignore Dockerfile if needed (some cases require a separate Dockerfile)
+Dockerfile*
+
+# Ignore other configuration files like local settings, etc.
+.env
+
+# Ignore npm/yarn dependencies if you're building a Node.js app in Docker
+node_modules/
+
+# Ignore macOS-specific files
+*.swp
+
+# Ignore Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+*.manifest
